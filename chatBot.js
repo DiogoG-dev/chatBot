@@ -1,122 +1,110 @@
-// leitor de qr code
+const { Client, LocalAuth } = require('whatsapp-web.js');
 const qrcode = require('qrcode-terminal');
-const { Client, Buttons, List, MessageMedia } = require('whatsapp-web.js'); // Mudança Buttons
-const client = new Client();
-// serviço de leitura do qr code
-client.on('qr', qr => {
-    qrcode.generate(qr, {small: true});
+
+// Inicializa o cliente
+const client = new Client({
+    authStrategy: new LocalAuth()
 });
-// apos isso ele diz que foi tudo certo
-client.on('ready', () => {
-    console.log('Tudo certo! WhatsApp conectado.');
+
+let userState = {}; // Controle de estado para cada usuário
+
+client.on('qr', (qr) => {
+    qrcode.generate(qr, { small: true });
 });
-// E inicializa tudo 
+
+client.once('ready', () => {
+    console.log('O Beto está pronto para trabalhar!');
+});
+
+// Inicializa o cliente
 client.initialize();
 
-const delay = ms => new Promise(res => setTimeout(res, ms)); // Função que usamos para criar o delay entre uma ação e outra
+client.on('message', async (message) => {
+    const userId = message.from; // Identifica o usuário pelo número
+    const userMessage = message.body.trim().toLowerCase();
 
-// Funil
-
-client.on('message', async msg => {
-
-    if (msg.body.match(/(chatBotTest)/i) && msg.from.endsWith('@c.us')) {
-
-        const chat = await msg.getChat();
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000); //Delay de 3000 milisegundos mais conhecido como 3 segundos
-        const contact = await msg.getContact(); //Pegando o contato
-        const name = contact.pushname; //Pegando o nome do contato
-        await client.sendMessage(msg.from,'Olá! '+ name.split(" ")[0] + 'Sou o assistente virtual da empresa tal. Como posso ajudá-lo hoje? Por favor, digite uma das opções abaixo:\n\n1 - Como funciona\n2 - Valores dos planos\n3 - Benefícios\n4 - Como aderir\n5 - Outras perguntas'); //Primeira mensagem de texto
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(5000); //Delay de 5 segundos
+    // Verifica se o comando exato "menu" foi digitado    
+    // /(menu|dia|tarde|noite|oi|olá|ola|opa)/i.test(userMessage)
+    // userMessage === 'menu'
+    if (/(menu|dia|tarde|noite|oi|olá|ola|opa)/i.test(userMessage)) {
+        userState[userId] = 'main_menu'; // Define o estado como menu principal
+        await client.sendMessage(
+            userId,
+            `Bem-vindo à loja *Roberto Motos!*\nEu sou o Beto e estou aqui para te ajudar! 😃\n
+📦 *Nosso E-commerce*: [ www.robertomotos.com.br ]\n
+📍 *Localização*: Rua Tiburtino Inácio, 166 - São Francisco, Brejo Santo - CE, 63260-000\n
+Por favor, escolha uma opção digitando o número correspondente:\n
+1️⃣ - Ver Produtos
+2️⃣ - Contato dos Vendedores
+3️⃣ - Falar com Atendente`
+        );
+    } 
     
-        
+    // Verifica se o usuário está em algum submenu
+    else if (userState[userId] === 'main_menu') {
+        if (userMessage === '1') {
+            userState[userId] = 'product_menu'; // Define o estado como submenu de produtos
+            await client.sendMessage(
+                userId,
+                `Escolha a categoria do produto digitando o número correspondente:\n
+1️⃣ - Transmissão
+2️⃣ - Acessórios
+3️⃣ - Capacetes
+4️⃣ - Ferramentas
+5️⃣ - Guidão
+6️⃣ - Lubrificantes\n
+Ou "*menu*" para voltar ao início. 😊`
+            );
+        } else if (userMessage === '2') {
+            userState[userId] = 'contact_menu'
+            await client.sendMessage(
+                userId,
+                `📞 *Contato dos Vendedores:*\n
+- João: +55 11 99999-9999\n
+- Maria: +55 11 88888-8888\n
+Ou digite "*menu*" para voltar ao menu principal.`
+            );
+        } else if (userMessage === '3') {
+            userState[userId] = 'attendant_mode'; // Ativa o modo atendente
+            await client.sendMessage(
+                userId,
+                `Por favor, aguarde. Um de nossos colaboradores irá atendê-lo em breve! 😊\n\nOu, se preferir, digite "*menu*" para voltar ao início.`
+            );
+        }
+    } 
+    
+    // Verifica se o usuário está em algum submenu de produtos
+    else if (userState[userId] === 'product_menu') {
+        if (userMessage === '1') {
+            await client.sendMessage(
+                userId,
+                `⚙ *Transmissão:*\n[ www.robertomotos.com.br/transmissao10 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        } else if (userMessage === '2') {
+            await client.sendMessage(
+                userId,
+                `🏁 *Acessórios:*\n[ www.robertomotos.com.br/acessorios17 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        } else if (userMessage === '3') {
+            await client.sendMessage(
+                userId,
+                `⛑ *Capacetes:*\n[ www.robertomotos.com.br/capacetes18 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        } else if (userMessage === '4') {
+            await client.sendMessage(
+                userId,
+                `🧰 *Ferramentas:*\n[ www.robertomotos.com.br/ferramentas210 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        } else if (userMessage === '5') {
+            await client.sendMessage(
+                userId,
+                `🏍 *Guidão:*\n[ www.robertomotos.com.br/guidao201 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        } else if (userMessage === '6') {
+            await client.sendMessage(
+                userId,
+                `🛢️ *Lubrificantes:*\n[ www.robertomotos.com.br/lubrificantes68 ]\n\nDigite "*menu*" para voltar ao menu inicial.`
+            );
+        }
     }
-
-
-
-
-    if (msg.body !== null && msg.body === '1' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Nosso serviço oferece consultas médicas 24 horas por dia, 7 dias por semana, diretamente pelo WhatsApp.\n\nNão há carência, o que significa que você pode começar a usar nossos serviços imediatamente após a adesão.\n\nOferecemos atendimento médico ilimitado, receitas\n\nAlém disso, temos uma ampla gama de benefícios, incluindo acesso a cursos gratuitos');
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'COMO FUNCIONA?\nÉ muito simples.\n\n1º Passo\nFaça seu cadastro e escolha o plano que desejar.\n\n2º Passo\nApós efetuar o pagamento do plano escolhido você já terá acesso a nossa área exclusiva para começar seu atendimento na mesma hora.\n\n3º Passo\nSempre que precisar');
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Link para cadastro: https://site.com');
-
-
-    }
-
-    if (msg.body !== null && msg.body === '2' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-
-
-        await delay(3000); //Delay de 3000 milisegundos mais conhecido como 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, '*Plano Individual:* R$22,50 por mês.\n\n*Plano Família:* R$39,90 por mês, inclui você mais 3 dependentes.\n\n*Plano TOP Individual:* R$42,50 por mês, com benefícios adicionais como\n\n*Plano TOP Família:* R$79,90 por mês, inclui você mais 3 dependentes');
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Link para cadastro: https://site.com');
-    }
-
-    if (msg.body !== null && msg.body === '3' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-
-
-        await delay(3000); //Delay de 3000 milisegundos mais conhecido como 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Sorteio de em prêmios todo ano.\n\nAtendimento médico ilimitado 24h por dia.\n\nReceitas de medicamentos');
-        
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Link para cadastro: https://site.com');
-
-    }
-
-    if (msg.body !== null && msg.body === '4' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-
-        await delay(3000); //Delay de 3000 milisegundos mais conhecido como 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Você pode aderir aos nossos planos diretamente pelo nosso site ou pelo WhatsApp.\n\nApós a adesão, você terá acesso imediato');
-
-
-        await delay(3000); //delay de 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Link para cadastro: https://site.com');
-
-
-    }
-
-    if (msg.body !== null && msg.body === '5' && msg.from.endsWith('@c.us')) {
-        const chat = await msg.getChat();
-
-        await delay(3000); //Delay de 3000 milisegundos mais conhecido como 3 segundos
-        await chat.sendStateTyping(); // Simulando Digitação
-        await delay(3000);
-        await client.sendMessage(msg.from, 'Se você tiver outras dúvidas ou precisar de mais informações, por favor, fale aqui nesse whatsapp ou visite nosso site: https://site.com ');
-
-
-    }
-})
+});
