@@ -33,6 +33,7 @@ client.on('message', async (message) => {
             `Bem-vindo à loja *Roberto Motos!*\nEu sou o Beto e estou aqui para te ajudar! 😃\n
 📦 *Nosso E-commerce*: [ www.robertomotos.com.br ]\n
 📍 *Localização*: Rua Tiburtino Inácio, 166 - São Francisco, Brejo Santo - CE, 63260-000\n
+🕧 *Horário de Funcionamento*: Segunda á Sexta *07:30*-*17:00* e Sábado *07:30*-*12:00*\n
 Por favor, escolha uma opção digitando o número correspondente:\n
 1️⃣ - Ver Produtos
 2️⃣ - Contato dos Vendedores
