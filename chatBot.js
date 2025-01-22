@@ -68,7 +68,7 @@ Ou digite "*menu*" para voltar ao menu principal.`
             userState[userId] = 'attendant_mode'; // Ativa o modo atendente
             await client.sendMessage(
                 userId,
-                `Por favor, aguarde. Um de nossos colaboradores irá atendê-lo em breve! 😊\n\nOu, se preferir, digite "*menu*" para voltar ao início.`
+                `Por favor, aguarde. Um de nossos colaboradores irá atendê-lo em breve! 😊\n\nPara agilizar-mos o seu atendimento me conte:\n• Sobre qual produto deseja informação?\n• Qual a marca do produto?\n• Qual modelo e ano de fabricação da moto?\nOu, se preferir, digite "*menu*" para voltar ao início.`
             );
         }
     } 
