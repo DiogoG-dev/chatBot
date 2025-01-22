@@ -31,9 +31,9 @@ client.on('message', async (message) => {
         await client.sendMessage(
             userId,
             `Bem-vindo à loja *Roberto Motos!*\nEu sou o Beto e estou aqui para te ajudar! 😃\n
-📦 *Nosso E-commerce*: [ www.robertomotos.com.br ]\n
-📍 *Localização*: Rua Tiburtino Inácio, 166 - São Francisco, Brejo Santo - CE, 63260-000\n
-🕧 *Horário de Funcionamento*: Segunda á Sexta *07:30*-*17:00* e Sábado *07:30*-*12:00*\n
+📦 *Nosso E-commerce*:\n[ www.robertomotos.com.br ]\n
+📍 *Localização*:\nRua Tiburtino Inácio, 166 - São Francisco, Brejo Santo - CE, 63260-000\n
+🕧 *Horário de Funcionamento*:\nSegunda á Sexta 07:30 - 17:00 e Sábado 07:30 - 12:00\n
 Por favor, escolha uma opção digitando o número correspondente:\n
 1️⃣ - Ver Produtos
 2️⃣ - Contato dos Vendedores
@@ -69,7 +69,7 @@ Ou digite "*menu*" para voltar ao menu principal.`
             userState[userId] = 'attendant_mode'; // Ativa o modo atendente
             await client.sendMessage(
                 userId,
-                `Por favor, aguarde. Um de nossos colaboradores irá atendê-lo em breve! 😊\n\nPara agilizar-mos o seu atendimento me conte:\n• Sobre qual produto deseja informação?\n• Qual a marca do produto?\n• Qual modelo e ano de fabricação da moto?\nOu, se preferir, digite "*menu*" para voltar ao início.`
+                `Por favor, aguarde. Um de nossos colaboradores irá atendê-lo em breve! 😊\n\nPara agilizar o atendimento, nos informe:\n🔸 Sobre qual produto deseja informação?\n🔸 Qual a marca do produto?\n🔸 Qual o modelo e o ano de fabricação da sua moto?\n\nOu, se preferir, digite "*menu*" para voltar ao início.`
             );
         }
     } 
