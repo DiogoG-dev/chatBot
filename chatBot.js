@@ -23,7 +23,7 @@ client.on('message', async (message) => {
     const userId = message.from; // Identifica o usuário pelo número
     const userMessage = message.body.trim().toLowerCase();
 
-    // Verifica se o comando exato "menu" foi digitado  
+    // Verifica se o comando exato "menu" foi digitado 
     // /(menu|dia|tarde|noite|oi|olá|ola|opa)/i.test(userMessage)
     // userMessage === 'menu'
     if (/(menu|dia|tarde|noite|oi|olá|ola|opa)/i.test(userMessage)) {
