@@ -40,7 +40,7 @@ Para rodar o projeto localmente em sua máquina, siga os passos abaixo:
 2. Navegue até o diretório do projeto:
    ```bash
    cd chatBot
-3. Execute no terminal "npm start":
+3. Execute o arquivo no terminal:
    ```bash
    npm start
 
