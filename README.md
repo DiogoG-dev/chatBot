@@ -43,6 +43,8 @@ Para rodar o projeto localmente em sua máquina, siga os passos abaixo:
 3. Execute o arquivo no terminal:
    ```bash
    npm start
+4. Abra o seu WhatsApp
+5. Conecte um novo dispositivo com o QRCode 
 
 ## 🤝 Como Contribuir
 Se você deseja contribuir para o desenvolvimento deste projeto, fique à vontade para fazer um fork e enviar pull requests.
