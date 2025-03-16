@@ -36,10 +36,10 @@ Para rodar o projeto localmente em sua máquina, siga os passos abaixo:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/diogog-dev/chatBot.git
+   git clone https://github.com/diogog-dev/chatBotWhatsApp.git
 2. Navegue até o diretório do projeto:
    ```bash
-   cd chatBot
+   cd chatBotWhatsApp
 3. Execute o arquivo no terminal:
    ```bash
    npm start
