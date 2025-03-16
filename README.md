@@ -4,7 +4,7 @@
 
 ## 📝 Descrição
 
-Este projeto foi uma excelente oportunidade para colocar em prática conhecimentos em lógica de programação, fluxogramas, experiência do usuário, desenvolvimento Back-End e utilização de bibliotecas open-source emergentes. As principais tecnologias utilizadas no desenvolvimento foram **Node.js** e **whatsapp-web.js**, **Git/GiHub** e .
+Este projeto foi uma excelente oportunidade para colocar em prática conhecimentos em lógica de programação, fluxogramas, experiência do usuário, desenvolvimento Back-End e utilização de bibliotecas open-source emergentes. As principais tecnologias utilizadas no desenvolvimento foram **Node.js** e **whatsapp-web.js**.
 
 ## 🛠️ Funcionalidades
 
